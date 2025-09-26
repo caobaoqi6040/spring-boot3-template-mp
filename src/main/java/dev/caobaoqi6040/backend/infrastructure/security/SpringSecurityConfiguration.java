@@ -47,6 +47,8 @@ public class SpringSecurityConfiguration {
 	@Bean
 	public RequestMatcher publicEndPointMatcher() {
 		return new OrRequestMatcher(
+			// dev
+			PathPatternRequestMatcher.withDefaults().matcher("/api/v1/users/**"),
 			// prod
 			PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/sign-in"),
 			PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/sign-up"),
