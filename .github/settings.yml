@@ -50,7 +50,7 @@ labels:
   - name: docs
     color: '#000000'
 
-  - name: work-flow
+  - name: dev-ops
     color: '#14d60a'
 
   - name: dependencies
