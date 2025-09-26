@@ -1,4 +1,4 @@
-name: spring-boot3-yuan
+name: spring-boot3-template-mp
 services:
   mysql:
     image: mysql:${MYSQL_IMAGE}
