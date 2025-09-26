@@ -1,0 +1,25 @@
+name: spring-boot3-yuan
+services:
+  mysql:
+    image: mysql:${MYSQL_IMAGE}
+    restart: "no"
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+  redis:
+    image: redis:${REDIS_IMAGE}
+    restart: "no"
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+    environment:
+      TZ: Asia/Shanghai
+volumes:
+  redis_data:
+  mysql_data:
