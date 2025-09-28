@@ -1,6 +1,6 @@
 package dev.caobaoqi6040.backend.integration;
 
-import dev.caobaoqi6040.backend.container.RedisContainersConfiguration;
+import dev.caobaoqi6040.backend.RedisContainersConfiguration;
 import dev.caobaoqi6040.backend.enums.ECache;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

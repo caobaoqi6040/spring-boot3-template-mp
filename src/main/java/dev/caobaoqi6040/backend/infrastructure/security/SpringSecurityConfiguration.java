@@ -50,6 +50,7 @@ public class SpringSecurityConfiguration {
 			// dev
 			PathPatternRequestMatcher.withDefaults().matcher("/api/v1/users/**"),
 			PathPatternRequestMatcher.withDefaults().matcher("/api/v1/ai/**"),
+			PathPatternRequestMatcher.withDefaults().matcher("/api/v1/oss/**"),
 			// prod
 			PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/sign-in"),
 			PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/auth/sign-up"),

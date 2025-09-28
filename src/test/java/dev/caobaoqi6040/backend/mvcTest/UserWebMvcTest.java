@@ -9,11 +9,11 @@ import dev.caobaoqi6040.backend.modules.user.service.UserService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see <a href="https://www.baeldung.com/spring-security-integration-tests">spring-security-integration-tests</a>
  * @since 2025/9/26 17:38
  */
-@WebMvcTest(controllers = {UserController.class})
+@WebMvcTest(controllers = {UserController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @AutoConfigureMockMvc
 @Import({UserStructImpl.class, DataFakerConfiguration.class})
 public class UserWebMvcTest {
@@ -45,7 +45,6 @@ public class UserWebMvcTest {
 	UserService service;
 
 	@Test
-	@WithMockUser(username = "ikun", roles = {"ADMIN"})
 	void should_return_user_list_200() throws Exception {
 		// given
 		User user1 = User.builder()
@@ -69,7 +68,6 @@ public class UserWebMvcTest {
 	}
 
 	@Test
-	@WithMockUser(username = "ikun", roles = {"ADMIN"})
 	void should_return_user_by_id_200() throws Exception {
 		// given
 		User user = User.builder()
@@ -87,7 +85,6 @@ public class UserWebMvcTest {
 	}
 
 	@Test
-	@WithMockUser(username = "ikun", roles = {"ADMIN"})
 	void should_return_not_found_when_user_does_not_exist() throws Exception {
 		// given
 		when(service.getUserWithDetailsById(anyLong())).thenThrow(new UserNotFoundException("User not found"));

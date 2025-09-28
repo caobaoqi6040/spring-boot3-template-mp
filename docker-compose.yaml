@@ -20,6 +20,20 @@ services:
       - redis_data:/data
     environment:
       TZ: Asia/Shanghai
+  minio:
+    image: minio/minio:${MINIO_IMAGE}
+    restart: "no"
+    ports:
+      - "${MINIO_API_PORT}:9000"
+      - "${MINIO_DASHBOARD_PORT}:9001"
+    environment:
+      TZ: Asia/Shanghai
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server /data --address ":${MINIO_API_PORT}" --console-address ":${MINIO_DASHBOARD_PORT}"
+    volumes:
+      - minio_data:/data
 volumes:
   redis_data:
   mysql_data:
+  minio_data:

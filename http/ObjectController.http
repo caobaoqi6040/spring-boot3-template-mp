@@ -1,0 +1,20 @@
+### list
+GET localhost:8080/api/v1/oss/file/spring-boot3-template-mp/zh-cn
+
+### upload
+POST localhost:8080/api/v1/oss/file/spring-boot3-template-mp/zh-cn
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="background.jpg"
+Content-Type: image/jpeg
+
+< ../background.jpg
+--WebAppBoundary--
+
+### get url
+GET localhost:8080/api/v1/oss/file/spring-boot3-template-mp/zh-cn/2025-09-28-11:28:40-cbd1f412292446e386b3aa73c0d225c2-background.jpg
+
+### delete
+DELETE localhost:8080/api/v1/oss/file/spring-boot3-template-mp/zh-cn/2025-09-28-11:28:40-cbd1f412292446e386b3aa73c0d225c2-background.jpg
+

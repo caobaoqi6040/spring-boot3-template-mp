@@ -1,4 +1,4 @@
-package dev.caobaoqi6040.backend.container;
+package dev.caobaoqi6040.backend;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

@@ -20,13 +20,10 @@ Content-Type: application/json
 }
 
 ### image2text
-POST localhost:8080/api/v1/ai/ollama/image2text
-Content-Type: multipart/form-data; boundary=WebAppBoundary
+POST localhost:8080/api/v1/ai/ollama/image2text?image-url
+Content-Type: application/json
 
---WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="background.jpg"
-Content-Type: image/jpeg
-
-< ../caobaoqi6040.jpg
---WebAppBoundary--
+{
+  "url": "http://127.0.0.1:9000/spring-boot3-template-mp/2025-09-28-11%3A28%3A40-cbd1f412292446e386b3aa73c0d225c2-background.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=6D1nlmMJQCxYX4rzVzZx%2F20250928%2Fzh-cn%2Fs3%2Faws4_request&X-Amz-Date=20250928T033207Z&X-Amz-Expires=10800&X-Amz-SignedHeaders=host&X-Amz-Signature=f69765df5505f50b94c9fe3a0631a4a499c9ffa611e7243d8f1622244935598d"
+}
 

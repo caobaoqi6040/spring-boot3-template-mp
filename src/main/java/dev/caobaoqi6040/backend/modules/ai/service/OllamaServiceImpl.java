@@ -3,12 +3,13 @@ package dev.caobaoqi6040.backend.modules.ai.service;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
-import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 
+import java.net.MalformedURLException;
 import java.util.UUID;
 
 /**
@@ -41,12 +42,13 @@ public class OllamaServiceImpl implements OllamaService {
 	}
 
 	@Override
-	public String image2SampleText(MultipartFile file) {
+	public String image2SampleText(String url) throws MalformedURLException {
+		UrlResource resource = new UrlResource(url);
 		return chatClient
 			.prompt()
 			.user(spec -> spec
 				.text("描述图片中的内容")
-				.media(MediaType.IMAGE_JPEG, file.getResource()))
+				.media(MediaType.IMAGE_JPEG, resource))
 			.advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId))
 			.call()
 			.content();
@@ -63,12 +65,13 @@ public class OllamaServiceImpl implements OllamaService {
 	}
 
 	@Override
-	public Flux<String> image2StreamText(MultipartFile file) {
+	public Flux<String> image2StreamText(String url) throws MalformedURLException {
+		UrlResource resource = new UrlResource(url);
 		return chatClient
 			.prompt()
 			.user(spec -> spec
 				.text("描述图片中的内容")
-				.media(MediaType.IMAGE_JPEG, file.getResource()))
+				.media(MediaType.IMAGE_JPEG, resource))
 			.advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId))
 			.stream()
 			.content();

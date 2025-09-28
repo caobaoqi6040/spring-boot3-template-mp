@@ -3,12 +3,10 @@ package dev.caobaoqi6040.backend.modules.ai.controller;
 import dev.caobaoqi6040.backend.modules.ai.domain.request.ChatRequestVo;
 import dev.caobaoqi6040.backend.modules.ai.service.OllamaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import java.net.MalformedURLException;
 
 /**
  * OllamaController
@@ -39,8 +37,8 @@ public class OllamaController {
 	}
 
 	@PostMapping("/image2text")
-	public ResponseEntity<String> image2text(@RequestBody MultipartFile file) {
-		String result = service.image2SampleText(file);
+	public ResponseEntity<String> image2text(@RequestBody ChatRequestVo vo) throws MalformedURLException {
+		String result = service.image2SampleText(vo.url());
 		return ResponseEntity.ok(result);
 	}
 

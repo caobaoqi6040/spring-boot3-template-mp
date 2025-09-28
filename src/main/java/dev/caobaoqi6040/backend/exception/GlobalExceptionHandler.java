@@ -1,5 +1,6 @@
 package dev.caobaoqi6040.backend.exception;
 
+import dev.caobaoqi6040.backend.modules.oss.exception.OSSException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -18,6 +19,20 @@ import java.time.LocalDateTime;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+	@ExceptionHandler(OSSException.class)
+	public ProblemDetail handleOSSException(OSSException ex) {
+
+		log.warn("oss exception msg {}", ex.getLocalizedMessage(), ex);
+
+		ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+		detail.setTitle("------- oss exception -------");
+		detail.setType(URI.create("https://localhost:8080/oss/help"));
+		detail.setProperty("time-stamp", LocalDateTime.now());
+		detail.setDetail("你干嘛 哎呦 ~ 🐔");
+
+		return detail;
+	}
 
 	@ExceptionHandler(Exception.class)
 	public ProblemDetail handleRuntimeException(Exception ex) {
