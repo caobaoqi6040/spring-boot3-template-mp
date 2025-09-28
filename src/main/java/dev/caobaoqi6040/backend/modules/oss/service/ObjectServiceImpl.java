@@ -1,5 +1,6 @@
 package dev.caobaoqi6040.backend.modules.oss.service;
 
+import dev.caobaoqi6040.backend.modules.oss.exception.BucketException;
 import dev.caobaoqi6040.backend.modules.oss.exception.OSSException;
 import dev.caobaoqi6040.backend.modules.oss.exception.ObjectException;
 import io.minio.*;
@@ -31,9 +32,11 @@ import java.util.concurrent.TimeUnit;
 public class ObjectServiceImpl implements ObjectService {
 
 	private final MinioClient minioClient;
+	private final BucketService bucketService;
 
-	public ObjectServiceImpl(MinioClient minioClient) {
+	public ObjectServiceImpl(MinioClient minioClient, BucketService bucketService) {
 		this.minioClient = minioClient;
+		this.bucketService = bucketService;
 	}
 
 	@Override
@@ -52,6 +55,9 @@ public class ObjectServiceImpl implements ObjectService {
 
 	@Override
 	public String makeObject(MultipartFile file, String bucketName, String region) {
+		if (!bucketService.bucketExist(bucketName, region)) {
+			throw new BucketException(String.format("there is no bucket %s with region %s", bucketName, region));
+		}
 		// TODO("get user info from cache to tag the object")
 		String fileName = UUID.randomUUID().toString().replace("-", "") + "-" + file.getOriginalFilename();
 		if (StringUtils.isEmpty(FilenameUtils.getExtension(fileName))) {
@@ -75,6 +81,9 @@ public class ObjectServiceImpl implements ObjectService {
 
 	@Override
 	public String getObjectUrl(String fileName, String bucketName, String region) {
+		if (!bucketService.bucketExist(bucketName, region)) {
+			throw new BucketException(String.format("there is no bucket %s with region %s", bucketName, region));
+		}
 		try {
 			if (!objectExist(fileName, bucketName, region)) {
 				throw new ObjectException(String.format("the file %s not exist for bucket %s with region %s", fileName, bucketName, region));
@@ -93,6 +102,9 @@ public class ObjectServiceImpl implements ObjectService {
 
 	@Override
 	public void deleteObjectUrl(String fileName, String bucketName, String region) {
+		if (!bucketService.bucketExist(bucketName, region)) {
+			throw new BucketException(String.format("there is no bucket %s with region %s", bucketName, region));
+		}
 		try {
 			if (!objectExist(fileName, bucketName, region)) {
 				throw new ObjectException(String.format("the file %s not exist for bucket %s with region %s", fileName, bucketName, region));
@@ -109,6 +121,9 @@ public class ObjectServiceImpl implements ObjectService {
 
 	@Override
 	public Iterable<Result<Item>> listObject(String bucketName, String region) {
+		if (!bucketService.bucketExist(bucketName, region)) {
+			throw new BucketException(String.format("there is no bucket %s with region %s", bucketName, region));
+		}
 		return minioClient.listObjects(ListObjectsArgs.builder()
 			.bucket(bucketName)
 			.region(region)
