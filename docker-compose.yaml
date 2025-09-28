@@ -33,6 +33,10 @@ services:
     command: server /data --address ":${MINIO_API_PORT}" --console-address ":${MINIO_DASHBOARD_PORT}"
     volumes:
       - minio_data:/data
+  zipkin:
+    image: 'openzipkin/zipkin:3.5.0-amd64'
+    ports:
+      - '9411:9411'
 volumes:
   redis_data:
   mysql_data:

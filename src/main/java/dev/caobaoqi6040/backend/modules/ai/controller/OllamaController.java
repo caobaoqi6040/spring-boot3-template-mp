@@ -2,11 +2,13 @@ package dev.caobaoqi6040.backend.modules.ai.controller;
 
 import dev.caobaoqi6040.backend.modules.ai.domain.request.ChatRequestVo;
 import dev.caobaoqi6040.backend.modules.ai.service.OllamaService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * OllamaController
@@ -31,7 +33,8 @@ public class OllamaController {
 	}
 
 	@PostMapping("/stream-chat")
-	public ResponseEntity<Flux<String>> streamChat(@RequestBody ChatRequestVo vo) {
+	public ResponseEntity<Flux<String>> streamChat(@RequestBody ChatRequestVo vo, HttpServletResponse response) {
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		Flux<String> flux = service.streamChat(vo.msg());
 		return ResponseEntity.ok(flux);
 	}
