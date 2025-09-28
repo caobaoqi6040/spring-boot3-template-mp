@@ -1,4 +1,4 @@
-package dev.caobaoqi6040.backend.modules.user.mapper;
+package dev.caobaoqi6040.backend.modules.user.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import dev.caobaoqi6040.backend.modules.user.entity.User;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import dev.caobaoqi6040.backend.modules.user.entity.User;
 import dev.caobaoqi6040.backend.modules.user.exception.UserNotFoundException;
-import dev.caobaoqi6040.backend.modules.user.mapper.UserMapper;
+import dev.caobaoqi6040.backend.modules.user.repository.UserMapper;
 import dev.caobaoqi6040.backend.modules.user.service.RoleService;
 import dev.caobaoqi6040.backend.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;

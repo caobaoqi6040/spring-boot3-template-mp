@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import dev.caobaoqi6040.backend.modules.user.entity.Role;
 import dev.caobaoqi6040.backend.modules.user.entity.User;
 import dev.caobaoqi6040.backend.modules.user.exception.PermissionNotFoundException;
-import dev.caobaoqi6040.backend.modules.user.mapper.RoleMapper;
+import dev.caobaoqi6040.backend.modules.user.repository.RoleMapper;
 import dev.caobaoqi6040.backend.modules.user.service.PermissionService;
 import dev.caobaoqi6040.backend.modules.user.service.RoleService;
 import lombok.RequiredArgsConstructor;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import dev.caobaoqi6040.backend.modules.user.entity.Permission;
 import dev.caobaoqi6040.backend.modules.user.entity.Role;
 import dev.caobaoqi6040.backend.modules.user.exception.PermissionNotFoundException;
-import dev.caobaoqi6040.backend.modules.user.mapper.PermissionMapper;
+import dev.caobaoqi6040.backend.modules.user.repository.PermissionMapper;
 import dev.caobaoqi6040.backend.modules.user.service.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

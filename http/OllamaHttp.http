@@ -1,8 +1,32 @@
 ### sample-chat
-GET localhost:8080/api/v1/ai/ollama/sample-chat
+POST localhost:8080/api/v1/ai/ollama/sample-chat
+Content-Type: application/json
+
+//{
+//  "msg": "HI 我的名字叫 caobaoqi6040, 向我介绍你自己"
+//}
+
+{
+  "msg": "你还记得 我叫什么名字吗"
+}
+
 
 ### stream-chat
-GET localhost:8080/api/v1/ai/ollama/stream-chat
+POST localhost:8080/api/v1/ai/ollama/stream-chat
+Content-Type: application/json
+
+{
+  "msg": "向我介绍你自己"
+}
 
 ### image2text
-GET localhost:8080/api/v1/ai/ollama/image2text
+POST localhost:8080/api/v1/ai/ollama/image2text
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="background.jpg"
+Content-Type: image/jpeg
+
+< ../caobaoqi6040.jpg
+--WebAppBoundary--
+
