@@ -1,5 +1,7 @@
 package dev.caobaoqi6040.backend.infrastructure.ai;
 
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import dev.caobaoqi6040.backend.enums.Models;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -26,18 +28,43 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class AiConfiguration {
 
+	private static final String DEFAULT_PROMPT = "你是一个博学的智能聊天助手，请根据用户提问回答！";
+
+
 	/**
 	 * your open api
 	 *
 	 * @param chatModel OpenAiChatModel
 	 * @return open ai chat client[gpt 4o]
 	 */
-	@Bean("open-ai")
+	@Bean("openAI")
 	public ChatClient openAI(OpenAiChatModel chatModel, ChatMemory chatMemory) {
 		return ChatClient.create(chatModel).mutate()
-			.defaultSystem("you are a helpful assistant. you need to response user`s question with chinese")
+			.defaultSystem(DEFAULT_PROMPT)
 			.defaultOptions(ChatOptions.builder()
-				.model(Models.Openai.GPT_4O.getModel()).build())
+				.model(Models.Openai.GPT_4O.getModel())
+				.temperature(0.7)
+				.build())
+			.defaultAdvisors(
+				MessageChatMemoryAdvisor.builder(chatMemory).build(),
+				SimpleLoggerAdvisor.builder().build())
+			.build();
+	}
+
+	/**
+	 * your open api
+	 *
+	 * @param chatModel OpenAiChatModel
+	 * @return open ai chat client[gpt 4o]
+	 */
+	@Bean("qwen")
+	public ChatClient dashScope(DashScopeChatModel chatModel, ChatMemory chatMemory) {
+		return ChatClient.create(chatModel).mutate()
+			.defaultSystem(DEFAULT_PROMPT)
+			.defaultOptions(DashScopeChatOptions.builder()
+				.withModel(Models.Qwen.QWEN3_MAX.getModel())
+				.withTemperature(0.7)
+				.build())
 			.defaultAdvisors(
 				MessageChatMemoryAdvisor.builder(chatMemory).build(),
 				SimpleLoggerAdvisor.builder().build())
@@ -54,9 +81,11 @@ public class AiConfiguration {
 	@Bean("ollama")
 	public ChatClient ollama(OllamaChatModel chatModel, ChatMemory chatMemory) {
 		return ChatClient.create(chatModel).mutate()
-			.defaultSystem("you are a helpful assistant. you need to response user`s question with chinese")
+			.defaultSystem(DEFAULT_PROMPT)
 			.defaultOptions(ChatOptions.builder()
-				.model(Models.Ollama.GEMMA3_4B.getModel()).build())
+				.model(Models.Ollama.GEMMA3_4B.getModel())
+				.temperature(0.7)
+				.build())
 			.defaultAdvisors(
 				MessageChatMemoryAdvisor.builder(chatMemory).build(),
 				SimpleLoggerAdvisor.builder().build())

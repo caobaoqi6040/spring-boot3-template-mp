@@ -19,6 +19,7 @@
   <properties>
     <java.version>17</java.version>
     <spring-ai.version>1.0.2</spring-ai.version>
+    <spring-ai-alibaba.version>1.0.0.2</spring-ai-alibaba.version>
     <mybatis-plus.version>3.5.14</mybatis-plus.version>
     <map-struct.version>1.6.0</map-struct.version>
   </properties>
@@ -32,6 +33,10 @@
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-starter-model-openai</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba.cloud.ai</groupId>
+      <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
@@ -190,6 +195,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.alibaba.cloud.ai</groupId>
+        <artifactId>spring-ai-alibaba-bom</artifactId>
+        <version>${spring-ai-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>org.springframework.ai</groupId>
         <artifactId>spring-ai-bom</artifactId>

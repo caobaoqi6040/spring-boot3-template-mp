@@ -1,0 +1,4 @@
+### sample-chat
+GET localhost:8080/api/v1/ai/qwen/sample-chat?query=向我介绍你自己
+### stream-chat
+GET localhost:8080/api/v1/ai/qwen/stream-chat?query=向我介绍你自己
