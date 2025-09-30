@@ -1,4 +1,5 @@
 ### sample-chat
 GET localhost:8080/api/v1/ai/qwen/sample-chat?query=向我介绍你自己
+
 ### stream-chat
-GET localhost:8080/api/v1/ai/qwen/stream-chat?query=向我介绍你自己
+GET localhost:8080/api/v1/ai/qwen/stream-chat?query=总结链接中的内容 https://www.huaweicloud.com/news/2025/20250929174623246.html

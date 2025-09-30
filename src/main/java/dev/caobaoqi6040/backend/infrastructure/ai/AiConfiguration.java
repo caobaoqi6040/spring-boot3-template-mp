@@ -12,6 +12,8 @@ import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
 import org.springframework.ai.chat.memory.repository.jdbc.MysqlChatMemoryRepositoryDialect;
 import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.ai.mcp.SyncMcpToolCallback;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +34,27 @@ public class AiConfiguration {
 
 
 	/**
+	 * dash scope api
+	 *
+	 * @param chatModel DashScopeChatModel
+	 * @return qwen chat client[qwen3 max]
+	 */
+	@Bean("qwen")
+	public ChatClient dashScope(DashScopeChatModel chatModel, SyncMcpToolCallbackProvider syncMcpToolCallbackProvider, ChatMemory chatMemory) {
+		return ChatClient.create(chatModel).mutate()
+			.defaultSystem(DEFAULT_PROMPT)
+			.defaultToolCallbacks(syncMcpToolCallbackProvider)
+			.defaultOptions(DashScopeChatOptions.builder()
+				.withModel(Models.Qwen.QWEN3_MAX.getModel())
+				.withTemperature(0.7)
+				.build())
+			.defaultAdvisors(
+				MessageChatMemoryAdvisor.builder(chatMemory).build(),
+				SimpleLoggerAdvisor.builder().build())
+			.build();
+	}
+
+	/**
 	 * your open api
 	 *
 	 * @param chatModel OpenAiChatModel
@@ -50,27 +73,6 @@ public class AiConfiguration {
 				SimpleLoggerAdvisor.builder().build())
 			.build();
 	}
-
-	/**
-	 * your open api
-	 *
-	 * @param chatModel OpenAiChatModel
-	 * @return open ai chat client[gpt 4o]
-	 */
-	@Bean("qwen")
-	public ChatClient dashScope(DashScopeChatModel chatModel, ChatMemory chatMemory) {
-		return ChatClient.create(chatModel).mutate()
-			.defaultSystem(DEFAULT_PROMPT)
-			.defaultOptions(DashScopeChatOptions.builder()
-				.withModel(Models.Qwen.QWEN3_MAX.getModel())
-				.withTemperature(0.7)
-				.build())
-			.defaultAdvisors(
-				MessageChatMemoryAdvisor.builder(chatMemory).build(),
-				SimpleLoggerAdvisor.builder().build())
-			.build();
-	}
-
 
 	/**
 	 * ollama
